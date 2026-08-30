@@ -10,6 +10,7 @@
 - 1000px未満の小さめ画像
 - 5MB超の大きめ画像
 - 複数画像の一括確認
+- 画像としてdecodeできない破損/偽装候補を明示NG
 
 判定は「自動で正解を決める」ものではなく、**人が最終確認するためのfirst-pass QA**です。
 
@@ -25,7 +26,7 @@ python3 -m http.server 8000
 
 ## Privacy / safety boundary
 
-画像本体は外部送信しません。ブラウザの `URL.createObjectURL()` でローカル表示し、結果表示時はファイル名などをHTMLエスケープします。広告リンクを有効化する場合も、`http` / `https` 以外は表示しません。
+画像本体は外部送信しません。ブラウザの `URL.createObjectURL()` でローカル表示し、成功/失敗どちらでもblob URLを解放します。decodeできない画像は無視せずNGとして表示します。結果表示時はファイル名などをHTMLエスケープし、広告リンクを有効化する場合も `http` / `https` 以外は表示しません。
 
 - [ブラウザ入力の安全境界と回帰テスト](docs/browser-input-boundaries.md)
 
