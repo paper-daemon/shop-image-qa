@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 global.location={href:'https://paper-daemon.github.io/shop-image-qa/'};
 global.document={querySelector:()=>({addEventListener(){},innerHTML:''})};
 
-const {escHtml,safeOfferUrl,imageNotes}=require('../app.js');
+const {escHtml,safeOfferUrl,imageNotes,unreadableImageNote}=require('../app.js');
 
 assert.equal(
   escHtml('<img src=x onerror=alert(1)>.png'),
@@ -15,5 +15,7 @@ assert.deepEqual(
   imageNotes(800,1200,6*1024*1024,'image/gif'),
   ['解像度が小さめ','容量大きめ','一般的なWeb形式ではない']
 );
+assert.equal(unreadableImageNote('image/jpeg'),'画像として読み込めない（image/jpeg）');
+assert.equal(unreadableImageNote(''),'画像として読み込めない（形式不明）');
 
-console.log('4 assertions PASS');
+console.log('6 assertions PASS');
